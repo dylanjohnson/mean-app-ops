@@ -5,21 +5,27 @@
 # for downloads and installation instructions, and see http://docs.vagrantup.com/v2/
 # for more information and configuring and using Vagrant.
 
+PROJECT_NAME = 'meanapp'
+
 Vagrant.configure("2") do |config|
 
   require 'chef'
-  CHEF::Config.from_file(File.join(File.dirname(__FILE__), '.chef', 'knife.rb'))
+  Chef::Config.from_file(File.join(File.dirname(__FILE__), '.chef', 'knife.rb'))
 
   # build server running Jenkins to test Ops and Dev
   config.vm.define "build" do |build|
     build.vm.box = 'chef/centos-6.5'
 
+    build.omnibus.chef_version = :latest
+
     build.vm.provider :virtualbox do |vb|
       vb.customize ['modifyvm', :id, '--memory', '1236']
     end
 
-    build.vm.network 'private_network', :ip => '192.168.88.1'
+    build.vm.network 'private_network', :ip => '192.168.88.10'
     build.vm.synced_folder ".", "/vagrant", :nfs => true
+
+    build.vm.hostname = 'build.' + PROJECT_NAME + '.local'
 
     build.vm.provision 'chef_client' do |chef|
       chef.chef_server_url = Chef::Config[:chef_server_url]
