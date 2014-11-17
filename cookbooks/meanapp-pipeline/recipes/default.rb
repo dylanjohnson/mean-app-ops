@@ -14,5 +14,5 @@ include_recipe 'meanapp-pipeline::jenkins'
 
 include_recipe 'pipeline::chefdk'
 include_recipe 'chef-zero'
-include_recipe 'pipeline::knife'
-include_recipe 'pipeline::jobs'
+include_recipe 'meanapp-pipeline::jobs'
+include_recipe 'meanapp-pipeline::knife'

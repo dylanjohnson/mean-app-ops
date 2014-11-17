@@ -1,0 +1,15 @@
+{
+  "name": "full-app",
+  "default_attributes": {
+
+  },
+  "json_class": "Chef::Role",
+  "run_list": [
+    "recipe[mean-app]"
+  ],
+  "description": "The full stack for running the app, i.e. DB, API, and client. For use in dev boxes.",
+  "chef_type": "role",
+  "override_attributes": {
+
+  }
+}

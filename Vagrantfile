@@ -16,7 +16,7 @@ Vagrant.configure("2") do |config|
   config.vm.define "build" do |build|
     build.vm.box = 'chef/centos-6.5'
 
-    build.omnibus.chef_version = :latest
+    build.omnibus.chef_version = '11.16.4'
 
     build.vm.provider :virtualbox do |vb|
       vb.customize ['modifyvm', :id, '--memory', '1236']
@@ -33,10 +33,41 @@ Vagrant.configure("2") do |config|
       chef.validation_key_path = Chef::Config[:validation_key]
       chef.validation_client_name = Chef::Config[:validation_client_name]
 
+      chef.provisioning_path = '/etc/chef'
+
       # name it specific to my local so chef server can ID it; others should change to own unique name
       chef.node_name = 'dj_local_build'
 
       chef.add_role 'build'
+    end
+  end
+
+  config.vm.define "full_app" do |full_app|
+    full_app.vm.box = 'chef/centos-6.5'
+
+    full_app.omnibus.chef_version = '11.6.0'
+
+    full_app.vm.provider :virtualbox do |vb|
+      vb.customize ['modifyvm', :id, '--memory', '512']
+    end
+
+    full_app.vm.network 'private_network', :ip => '192.168.88.88'
+    full_app.vm.synced_folder "./sample-app/", "/vagrant", :nfs => true
+
+    full_app.vm.hostname = 'app.' + PROJECT_NAME + '.local'
+
+    full_app.vm.provision 'chef_client' do |chef|
+      chef.chef_server_url = Chef::Config[:chef_server_url]
+      chef.log_level = Chef::Config[:log_level]
+      chef.validation_key_path = Chef::Config[:validation_key]
+      chef.validation_client_name = Chef::Config[:validation_client_name]
+
+      chef.provisioning_path = '/etc/chef'
+
+      # name it specific to my local so chef server can ID it; others should change to own unique name
+      chef.node_name = 'dj_local_full_app'
+
+      chef.add_role 'full-app'
     end
   end
 end
