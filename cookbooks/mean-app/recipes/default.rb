@@ -11,6 +11,9 @@
 include_recipe 'nodejs'
 include_recipe 'nodejs::npm'
 
+# git
+include_recipe 'git'
+
 # install grunt globally
 nodejs_npm 'grunt-cli'
 

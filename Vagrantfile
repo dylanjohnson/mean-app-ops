@@ -65,7 +65,7 @@ Vagrant.configure("2") do |config|
       chef.provisioning_path = '/etc/chef'
 
       # name it specific to my local so chef server can ID it; others should change to own unique name
-      chef.node_name = 'dj_local_full_app'
+      chef.node_name = 'tampadevops_local_full_app'
 
       chef.add_role 'full-app'
     end
