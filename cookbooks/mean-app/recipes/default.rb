@@ -25,7 +25,7 @@ nodejs_npm 'bower'
 # TODO: make path an attribute and put this in a better place, i.e. /apps
 # install app dependencies
 nodejs_npm 'app' do
-  path '/vagrant'
+  path '/app'
   json true
 end
 
@@ -34,5 +34,5 @@ include_recipe 'mongodb::default'
 
 # start grunt
 execute 'grunt' do
-  cwd '/vagrant'
+  cwd '/app'
 end
