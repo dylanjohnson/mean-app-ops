@@ -11,7 +11,13 @@ a team practicing DevOps methodology while building a MEAN app. This project jus
   - Install ChefDK
   - Install `chef` as a Vagrant plugin: `vagrant plugin install chef`
   - Install `vagrant-omnibus` plugin: `vagrant plugin install vagrant-omnibus`
-  - Add the VM(s) to `/etc/hosts` (or whatever that would be on Windows): `192.168.88.1  build.meanapp.local`
+  - Add the VM(s) to `/etc/hosts` (or whatever that would be on Windows): `192.168.88.110  build.meanapp.local\ 192.168.88.188`
+  - Converge the app kitchen: `cd cookbooks/mean-app && vagrant up`
+  - Converge the build kitchen: `cd cookbooks/meanapp-pipeline && vagrant up`
+
+**NOTE: this will set up a "mock" local environment using chef-zero and test-kitchen. The `Vagrantfile` at the root will
+spin up a "real" local environment, but requires set up of a chef-server and chef-config. (TODO: add docs for setting up
+hosted chef).**
 
 ## T(K)DD
 This repo embraces Test Kitchen Driven Development of Chef assets. It uses Jenkins to monitor a git repository and run
